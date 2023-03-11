@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from '../services/axios';
 import { PokemonType, PokemonList } from '../types';
-import { intersection, intersectionWith } from 'lodash';
+import { intersectionBy } from 'lodash';
 export default function useFetchPokemonTypes({
   selectedTypes,
 }: {
@@ -20,18 +20,13 @@ export default function useFetchPokemonTypes({
         const resp = await Promise.all(
           selectedTypes.map(async (type) => {
             const result = await axios.get(`/type/${type}/`);
-            return result.data.pokemon;
+            return result.data.pokemon.map(
+              (item: { pokemon: { name: string; url: string } }) => item.pokemon
+            );
           })
         );
 
-        let newArray = resp.map((arr) =>
-          arr.map((item: any) => item.pokemon.name)
-        );
-
-        let commonValues = intersection(...newArray).map((item) => ({
-          name: item,
-          url: item,
-        }));
+        const commonValues = intersectionBy<PokemonType>(...resp, 'name');
 
         response = {
           data: {
