@@ -13,7 +13,7 @@ export default function PokemonTypeButton({
     <button
       onClick={() => onClick(name)}
       className={`px-3 py-2 text-center bg-gray-100 rounded-full cursor-pointer transition ${
-        isSelected && 'bg-blue-400 text-white font-semibold'
+        isSelected && 'bg-blue-500 text-white font-semibold'
       }`}
     >
       {name}

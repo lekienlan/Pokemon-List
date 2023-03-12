@@ -63,7 +63,7 @@ function PokemonTypes() {
 }
 
 function PokemonList() {
-  const { selectedTypes, setSelectedTypes } = useContext(HomeContext);
+  const { selectedTypes } = useContext(HomeContext);
   const { data, onNext, onPrev, loading, error } = useFetchPokemons({
     selectedTypes,
   });
@@ -93,6 +93,7 @@ function PokemonList() {
 
   return (
     <div>
+      <h3 className='px-6 font-semibold'>Total: {data?.count}</h3>
       {renderList()}
       <div className='flex fixed bottom-0 left-0 bg-white justify-between w-full p-6'>
         <button
